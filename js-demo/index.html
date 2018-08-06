@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Image Filter Test</title>
+		<script src="shaders.js" async="async" defer="defer"></script>
+		<script src="state.js" async="async" defer="defer"></script>
+		<script src="gl-helpers.js" async="async" defer="defer"></script>
+		<script src="histogram.js" async="async" defer="defer"></script>
+		<script src="script.js" async="async" defer="defer"></script>
+		<style>
+			body
+			{
+				background: black;
+				color: white;
+				padding: 5px;
+				margin: 0;
+				text-align: center;
+				font-size: 14pt;
+				vertical-align: top;
+				font-family: Helevtica, sans-serif;
+			}
+			input
+			{
+				font-size: 16pt;
+			}
+			img, canvas
+			{
+				width: 300px;
+				height: 200px;
+				border: 2px solid gold;
+				background: black;
+				z-index: 0;
+			}
+			canvas
+			{
+				image-rendering: pixelated;
+			}
+			img:hover, canvas:hover
+			{
+				z-index: 999;
+			}
+			.histogram
+			{
+				width: 256px;
+				height: 64px;
+			}
+			.stack
+			{
+				display: inline-block;
+				vertical-align: top;
+			}
+			.stack>.histogram
+			{
+				margin-top: -80px;
+			}
+
+			table
+			{
+				margin: 0 auto;
+			}
+			td
+			{
+				width: 140px;
+				height: 80px;
+				padding: 0;
+				word-break: break-word;
+			}
+			table, td
+			{
+				border: 1px solid gray;
+				border-collapse: collapse;
+			}
+			td img
+			{
+				border: none;
+				width: 90px;
+				height: 60px;
+			}
+			td img::after
+			{
+				content: attr(src);
+			}
+		</style>
+	</head>
+	<body>
+		Generated Image Size:
+		<input type="number" min="1" max="300" name="width"  value="90" />
+		<input type="number" min="1" max="200" name="height" value="60" /><br />
+		Center size, fade rate, minimum light, colour limit:
+		<input type="number" step="0.01" min="0.0" max="0.49" name="center_size" value="0.20" title="Percentage or srea from the middle that is reserve at full lightness" />
+		<input type="number" step="0.01" min="0.0" max="6.0"  name="fade_rate"   value="2.00" title="Linear ratio of the distance applied to the fade off" />
+		<input type="number" step="0.01" min="0.0" max="1.0"  name="min_cutoff"  value="0.20" title="Minumum lightnes factor allowed" />
+		<input type="number" min="2" max="256" name="colors" value="16" title="Distinct colours in hue map" /><br/>
+		Add Image <input type="text" name="url" /> <button onclick="addImage( document.getElementsByName( 'url' )[0].value );">Add</button>
+		<canvas id="canvas" style="display: none;"></canvas>
+
+		<div>
+			<img src="https://https://tea-cats.co.uk/photos/2018-05-25 MCM/IMG_2763.JPG" />
+			<div class="stack">
+				<canvas id="light-pane-0"></canvas><br/>
+				<canvas id="light-hist-0" class="histogram"></canvas>
+			</div>
+			<canvas id="hue-pane-0"></canvas>
+		</div>
+		<div>
+			<img src="https://https://tea-cats.co.uk/photos/2018-05-25 MCM/IMG_2765.JPG" />
+			<div class="stack">
+				<canvas id="light-pane-1"></canvas><br/>
+				<canvas id="light-hist-1" class="histogram"></canvas>
+			</div>
+			<canvas id="hue-pane-1"></canvas>
+		</div>
+
+		<div>
+			<img src="https://https://tea-cats.co.uk/photos/2018-05-25 MCM/IMG_2556.JPG" />
+			<div class="stack">
+				<canvas id="light-pane-2"></canvas><br/>
+				<canvas id="light-hist-2" class="histogram"></canvas>
+			</div>
+			<canvas id="hue-pane-2"></canvas>
+		</div>
+
+		<span id="breaker"></span>
+
+		<table>
+			<tbody id="table"><tr><td></td></tr></tbody>
+		</table>
+	</body>
+</html>
