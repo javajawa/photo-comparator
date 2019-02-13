@@ -117,6 +117,7 @@ function updateSettings()
 	}
 	
 	// Reset the maps for all existing inputs.
+	program.maps = {};
 	for ( input of program.inputs )
 	{
 		input.sigma_x1 = null;
