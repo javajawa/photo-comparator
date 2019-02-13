@@ -115,6 +115,13 @@ function updateSettings()
 	{
 		program.settings[ input.name ] = parseFloat( input.value );
 	}
+	
+	// Reset the maps for all existing inputs.
+	for ( input of program.inputs )
+	{
+		input.sigma_x1 === null
+	}
+	
 	requestAnimationFrame(frame);
 }
 
