@@ -119,7 +119,7 @@ function updateSettings()
 	// Reset the maps for all existing inputs.
 	for ( input of program.inputs )
 	{
-		input.sigma_x1 === null
+		input.sigma_x1 = null;
 	}
 	
 	requestAnimationFrame(frame);
